@@ -1,23 +1,27 @@
-import "@/app/globals.css"
-import { Inter } from 'next/font/google'
+import type React from "react"
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import "./globals.css"
+import { ToastProvider } from "@/lib/toast-context"
 
 const inter = Inter({ subsets: ["latin"] })
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Chuck Norris Jokes",
-  description: "A fun app to browse and save Chuck Norris jokes",
+  description: "A collection of Chuck Norris jokes with favorites and ratings",
 }
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode
-}) {
+}>) {
   return (
-    <html lang="en" >
+    <html lang="en">
       <body className={inter.className}>
-        {children}
+        <ToastProvider>{children}</ToastProvider>
       </body>
     </html>
   )
 }
+
