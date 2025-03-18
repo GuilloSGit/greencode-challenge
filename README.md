@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Chuck Norris Jokes App 💥😂
 
-## Getting Started
+> "Chuck Norris doesn’t do push-ups. He pushes the Earth down."
 
-First, run the development server:
+## 🚀 About this project
+This is a **Next.js** app that delivers unlimited Chuck Norris jokes because the world can always use more of them. Users can **favorite** jokes, **rate them**, and even **sort them by rating**. Because, let’s be honest, some Chuck Norris jokes are just deadlier than others. 💀
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🛠 Setup Instructions
+
+### 1️⃣ Clone this repo
+```sh
+ git clone https://github.com/GuilloSGit/greencode-challenge.git
+ cd greencode-challenge
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2️⃣ Install dependencies
+```sh
+ npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3️⃣ Run the development server
+```sh
+ npm run dev
+```
+Then, open [http://localhost:3000](http://localhost:3000) in your browser and enjoy the legendary wisdom of Chuck Norris. 🥋
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 📦 Dependencies
+- **Next.js** – Because React alone isn’t Chuck Norris enough.
+- **Tailwind CSS** – Choosed weapon for styling.
+- **LocalStorage** – No backend needed; Chuck Norris stores everything in his head, but we use local storage.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🎯 Features
+✔️ Fetch random Chuck Norris jokes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+✔️ Favorite jokes for later inspiration
 
-## Deploy on Vercel
+✔️ Remove jokes from your favorites if you realize you can't handle the truth
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+✔️ Rate jokes (1-5 ⭐) and sort them accordingly from Favorite Jokes tab
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+✔️ Data persists locally, so your favorites survive even a nuclear apocalypse (or just a browser refresh)
+
+---
+
+## 📝 Implementation Notes
+- **State Management:** No Redux, just good ol' useState and useEffect.
+- **Data Persistence:** LocalStorage keeps your jokes safe.
+- **UI Library:** Tailwind CSS, because even Chuck Norris appreciates good design.
+
+---
+
+## 🎉 Have fun!
+Pull requests, feature suggestions, and Chuck Norris jokes are always welcome! 😎
+
+Feel free to contact me:
+
+- Email: guillermoandrada@gmail.com
+- LinkedIn: https://www.linkedin.com/in/guillermo-david-andrada/
+- GitHub: https://github.com/GuilloSGit
