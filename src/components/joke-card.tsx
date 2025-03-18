@@ -11,7 +11,7 @@ interface JokeCardProps {
 
 const JokeCard: React.FC<JokeCardProps> = ({ joke } ) => {
     return (
-        <div className="joke-card">
+        <div className="joke-card rounded-lg shadow-md">
             <img src={joke.icon_url} alt="Joke Icon" />
             <p>{joke.value}</p>
         </div>
