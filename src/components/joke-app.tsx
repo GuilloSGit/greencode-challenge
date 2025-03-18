@@ -5,6 +5,8 @@ import type { Joke } from "@/lib/types"
 import { fetchRandomJoke } from "@/lib/api"
 import FavoritesList from "@/components/favorites-list"
 import { useToast } from "@/lib/toast-context"
+import NewJokeIcon from "./SVG/NewJokeIcon"
+import HeartIcon from "./SVG/HeartIcon"
 
 export default function JokeApp() {
   const [joke, setJoke] = useState<Joke | null>(null)
@@ -109,39 +111,14 @@ export default function JokeApp() {
                     onClick={getNewJoke}
                     className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-md flex items-center transition-colors"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 mr-2"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M23 4v6h-6" />
-                      <path d="M1 20v-6h6" />
-                      <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10" />
-                      <path d="M20.49 15a9 9 0 0 1-14.85 3.36L1 14" />
-                    </svg>
+                    <NewJokeIcon filled={false} />
                     New Joke
                   </button>
                   <button
                     onClick={addToFavorites}
                     className="px-4 py-2 border border-orange-500 text-orange-500 hover:bg-orange-50 rounded-md flex items-center transition-colors"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 mr-2"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-                    </svg>
+                    <HeartIcon filled={false} />
                     Favorite
                   </button>
                 </div>
