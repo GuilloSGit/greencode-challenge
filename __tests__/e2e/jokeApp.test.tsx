@@ -1,5 +1,4 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
 import { act } from 'react'; 
 import JokeApp from '@/components/joke-app';
 import { fetchRandomJoke } from '@/lib/api';
@@ -165,14 +164,14 @@ describe('JokeApp End-to-End', () => {
     
     mockLocalStorage.getItem.mockReturnValue(JSON.stringify(savedJokes));
     
-    const { container } = render(
+    render(
       <ToastProvider>
         <JokeApp />
       </ToastProvider>
     );
     
     // Ir a la pestaña de favoritos
-    const favoritesTab = screen.getAllByRole('button')[1];
+    const favoritesTab = screen.getByRole('tab', { name: /favorites/i });
     
     await act(async () => {
       fireEvent.click(favoritesTab);
@@ -180,23 +179,53 @@ describe('JokeApp End-to-End', () => {
     
     // Verificar que se muestran los chistes guardados
     await waitFor(() => {
-      expect(screen.getByText('Joke One')).toBeInTheDocument();
-      expect(screen.getByText('Joke Two')).toBeInTheDocument();
+      // Usar una consulta más flexible para encontrar el texto
+      const jokeOneElement = screen.getByText((content, element) => {
+        return content.includes('Joke One');
+      });
+      const jokeTwoElement = screen.getByText((content, element) => {
+        return content.includes('Joke Two');
+      });
+      
+      expect(jokeOneElement).toBeInTheDocument();
+      expect(jokeTwoElement).toBeInTheDocument();
     });
     
     // Cambiar ordenamiento a "highest"
-    const sortSelect = screen.getByRole('combobox');
+    const sortSelect = screen.getByLabelText(/sort favorites by/i);
     await act(async () => {
       fireEvent.change(sortSelect, { target: { value: 'highest' } });
     });
     
-    // Obtener las tarjetas de chistes después del ordenamiento
-    // Lo hacemos así porque podrían tener elementos anidados y el orden en getAllByText
-    // no sería confiable
-    const jokeCards = container.querySelectorAll('.bg-gray-800.rounded-lg.p-4');
-    await waitFor(() => {
-      expect(jokeCards[0].textContent).toContain('Joke Two'); // rating 4
-      expect(jokeCards[1].textContent).toContain('Joke One'); // rating 2
+    // Verificar que los chistes se hayan reordenado
+    const jokesAfterSort = screen.getAllByRole('listitem');
+    expect(jokesAfterSort.length).toBe(2);
+    
+    // Verificar que Joke Two (rating 4) aparece primero que Joke One (rating 2)
+    const jokesText = jokesAfterSort.map(joke => joke.textContent);
+    
+    expect(jokesText[0]).toContain('Joke Two');
+    expect(jokesText[1]).toContain('Joke One');
+    
+    // Valorar Joke One con 5 estrellas
+    const jokeOneElement = screen.getByText((content, element) => {
+      return content.includes('Joke One');
+    }).closest('div[role="listitem"]');
+    
+    if (!jokeOneElement) {
+      throw new Error('Joke One container not found');
+    }
+    
+    const jokeOneRatingButtons = within(jokeOneElement as HTMLElement).getAllByRole('button').filter((btn: HTMLElement) => 
+      btn.getAttribute('aria-label')?.includes('Rate')
+    );
+    
+    // Hacer clic en el quinto botón (5 estrellas)
+    await act(async () => {
+      fireEvent.click(jokeOneRatingButtons[4]);
     });
+    
+    // Verificar que se ha actualizado la clasificación en localStorage
+    expect(mockLocalStorage.setItem).toHaveBeenCalled();
   });
 });

@@ -3,7 +3,7 @@
 > "Chuck Norris doesn't do push-ups. He pushes the Earth down."
 
 ## 🚀 About this project
-This is a **Next.js** app that delivers unlimited Chuck Norris jokes because the world can always use more of them. Users can **favorite** jokes, **rate them**, and even **sort them by rating**. Because, let's be honest, some Chuck Norris jokes are just deadlier than others. 💀
+This is a **Next.js** app that delivers unlimited Chuck Norris jokes because the world can always use more of them. Users can **favorite** jokes, **rate them**, **sort them by rating**, and even **share them on WhatsApp**. Because, let's be honest, some Chuck Norris jokes are just deadlier than others. 💀
 
 ---
 
@@ -60,9 +60,15 @@ Chuck Norris doesn't test his code; the code tests itself out of fear. But since
 
 ✔️ Rate jokes (1-5 ⭐) and sort them accordingly from Favorite Jokes tab
 
+✔️ Share your favorite jokes on WhatsApp with a single click
+
 ✔️ Data persists locally, so your favorites survive even a nuclear apocalypse (or just a browser refresh)
 
 ✔️ Toast notifications that appear faster than Chuck Norris can roundhouse kick
+
+✔️ Full accessibility support because Chuck Norris believes jokes should be for everyone
+
+✔️ Visual feedback on buttons to show their current state (even Chuck Norris appreciates good UX)
 
 ---
 
@@ -71,6 +77,8 @@ Chuck Norris doesn't test his code; the code tests itself out of fear. But since
 - **Data Persistence:** LocalStorage keeps your jokes safe.
 - **UI Library:** Tailwind CSS, because even Chuck Norris appreciates good design.
 - **Custom Hooks:** We've separated logic into custom hooks - something even Chuck Norris would approve of.
+- **Accessibility:** ARIA attributes, semantic HTML and screen reader support - because Chuck Norris is very inclusive.
+- **SVG Components:** Modular SVG icons for consistency across the UI.
 
 ---
 
