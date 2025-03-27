@@ -17,7 +17,7 @@ This is a **Next.js** app that delivers unlimited Chuck Norris jokes because the
 
 ### 2️⃣ Install dependencies
 ```sh
- npm install
+ npm install --force
 ```
 
 ### 3️⃣ If you encounter styling issues, run these commands:
