@@ -7,6 +7,11 @@ export function useSortedFavorites(favorites: Joke[]) {
   const [sortBy, setSortBy] = useState<SortOption>("newest");
 
   const sortedFavorites = useMemo(() => {
+    if (sortBy === "newest") {
+      // Invertir el orden para que los más recientes (al final del array) aparezcan primero
+      return [...favorites].reverse();
+    }
+    
     return [...favorites].sort((a, b) => {
       if (sortBy === "highest") {
         return (b.rating || 0) - (a.rating || 0);

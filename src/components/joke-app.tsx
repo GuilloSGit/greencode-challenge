@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import FavoritesList from "./favorites-list"
 import HeartIcon from "./SVG/HeartIcon"
 import NewJokeIcon from "./SVG/NewJokeIcon"
+import WhatsAppIcon from "./SVG/WhatsAppIcon"
 import { useJoke } from "@/hooks/useJoke"
 import { useFavorites } from "@/hooks/useFavorites"
 
@@ -65,10 +66,31 @@ export default function JokeApp() {
             </button>
             <button
               onClick={() => joke && addToFavorites(joke)}
-              className="text-white px-6 py-2 rounded-md flex items-center gap-2 bg-gray-400 hover:bg-gray-500 transition-colors"
-              disabled={loading || !joke}
+              className={`text-white px-6 py-2 rounded-md flex items-center gap-2 transition-colors ${
+                loading || !joke || favorites.some(fav => fav.id === joke?.id)
+                  ? "bg-transparent border-2 border-gray-300 text-gray-700"
+                  : "bg-gray-400 hover:bg-gray-500"
+              }`}
+              disabled={loading || !joke || favorites.some(fav => fav.id === joke?.id)}
             >
-              <HeartIcon filled={false} /> Add to Favorites
+              <HeartIcon filled={favorites.some(fav => fav.id === joke?.id)} /> Add to Favorites
+            </button>
+            <button
+              onClick={() => {
+                if (joke) {
+                  const encodedText = encodeURIComponent(joke.value);
+                  window.open(`https://wa.me/?text=${encodedText}`, '_blank');
+                }
+              }}
+              className={`text-white px-6 py-2 rounded-md flex items-center gap-2 transition-colors ${
+                loading || !joke 
+                ? "bg-transparent border-2 border-green-500 text-green-500"
+                : "bg-green-600 hover:bg-green-700"
+              }`}
+              disabled={loading || !joke}
+              title="Share this joke on WhatsApp"
+            >
+              <WhatsAppIcon filled={true} /> Share on WhatsApp
             </button>
           </div>
         </div>

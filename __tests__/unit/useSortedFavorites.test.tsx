@@ -14,8 +14,8 @@ describe('useSortedFavorites Hook', () => {
     const { result } = renderHook(() => useSortedFavorites(mockJokes));
     
     expect(result.current.sortBy).toBe('newest');
-    // En 'newest', debería mantener el orden original
-    expect(result.current.sortedFavorites).toEqual(mockJokes);
+    // En 'newest', debería invertir el orden original para mostrar los más recientes primero
+    expect(result.current.sortedFavorites).toEqual([...mockJokes].reverse());
   });
 
   test('should sort by highest rating', () => {
@@ -75,5 +75,29 @@ describe('useSortedFavorites Hook', () => {
     rerender({ jokes: mockJokes });
     
     expect(result.current.sortedFavorites).toHaveLength(4);
+  });
+
+  test('should update sorted list when favorites change', () => {
+    const { result, rerender } = renderHook(
+      (props) => useSortedFavorites(props),
+      { initialProps: mockJokes }
+    );
+    
+    const updatedJokes = [
+      ...mockJokes,
+      { id: '5', value: 'Joke 5', icon_url: 'test5.png', rating: 2 }
+    ];
+    
+    rerender(updatedJokes);
+    
+    // Con 'newest', los elementos deberían estar en orden inverso
+    expect(result.current.sortedFavorites).toEqual([...updatedJokes].reverse());
+    
+    act(() => {
+      result.current.setSortBy('highest');
+    });
+    
+    // Con highest, el elemento con id '2' debería seguir siendo el primero
+    expect(result.current.sortedFavorites[0].id).toBe('2');
   });
 });
