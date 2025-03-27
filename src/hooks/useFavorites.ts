@@ -10,7 +10,7 @@ export function useFavorites() {
     const storedFavorites = localStorage.getItem("chuckFavorites");
     if (storedFavorites) {
       setFavorites(JSON.parse(storedFavorites));
-      showToast("Favorites loaded successfully", "success");
+      showToast("Favorites loaded", "success");
     }
   }, [showToast]);
 
@@ -40,7 +40,7 @@ export function useFavorites() {
 
   const removeFromFavorites = (id: string) => {
     setFavorites((prev) => prev.filter((joke) => joke.id !== id));
-    showToast("Joke removed from your favorites", "info");
+    showToast("Joke removed from your favorites", "warning");
   };
 
   const updateRating = (id: string, rating: number) => {

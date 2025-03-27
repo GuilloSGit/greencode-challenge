@@ -28,7 +28,6 @@ export default function FavoritesList({ favorites, onRemove, onUpdateRating }: F
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-medium">Your Favorite Jokes</h2>
         <div className="flex items-center gap-2">
           <label htmlFor="sort-by" className="text-sm text-gray-600">
             Sort by:
