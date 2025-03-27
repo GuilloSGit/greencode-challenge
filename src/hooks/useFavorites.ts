@@ -29,7 +29,12 @@ export function useFavorites() {
     }
 
     const jokeWithRating = { ...joke, rating: 0 };
-    setFavorites((prev) => [...prev, jokeWithRating]);
+    setFavorites((prevFavorites) => {
+      if (prevFavorites.some(fav => fav.id === joke.id)) {
+        return prevFavorites;
+      }
+      return [...prevFavorites, jokeWithRating];
+    });
     showToast("Joke added to your favorites!", "success");
   };
 
