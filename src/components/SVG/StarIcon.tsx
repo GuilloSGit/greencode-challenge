@@ -1,4 +1,4 @@
-// src/components/StarIcon.tsx
+// src/components/SVG/StarIcon.tsx
 import React from 'react';
 
 interface StarIconProps {

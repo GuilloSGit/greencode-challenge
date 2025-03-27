@@ -1,4 +1,4 @@
-// src/components/StarIcon.tsx
+// src/components/SVG/ArrowIcon.tsx
 import React from 'react';
 
 interface ArrowIconProps {

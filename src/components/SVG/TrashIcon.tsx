@@ -1,4 +1,4 @@
-// src/components/StarIcon.tsx
+// src/components/SVG/TrashIcon.tsx
 import React from 'react';
 
 interface TrashIconProps {

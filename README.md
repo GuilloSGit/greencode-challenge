@@ -20,7 +20,16 @@ This is a **Next.js** app that delivers unlimited Chuck Norris jokes because the
  npm install
 ```
 
-### 3️⃣ Run the development server
+### 3️⃣ If you encounter styling issues, run these commands:
+```sh
+ # Install compatible versions of Tailwind CSS, PostCSS, and Autoprefixer
+ npm install -D tailwindcss@3.3.0 postcss@8.4.31 autoprefixer@10.4.14
+ 
+ # Initialize Tailwind CSS
+ npx tailwindcss init -p
+```
+
+### 4️⃣ Run the development server
 ```sh
  npm run dev
 ```

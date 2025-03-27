@@ -1,137 +1,86 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import type { Joke } from "@/lib/types"
-import { fetchRandomJoke } from "@/lib/api"
-import FavoritesList from "@/components/favorites-list"
-import { useToast } from "@/lib/toast-context"
-import NewJokeIcon from "./SVG/NewJokeIcon"
+import FavoritesList from "./favorites-list"
 import HeartIcon from "./SVG/HeartIcon"
+import NewJokeIcon from "./SVG/NewJokeIcon"
+import { useJoke } from "@/hooks/useJoke"
+import { useFavorites } from "@/hooks/useFavorites"
 
 export default function JokeApp() {
-  const [joke, setJoke] = useState<Joke | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [favorites, setFavorites] = useState<Joke[]>([])
-  const [activeTab, setActiveTab] = useState("random")
-  const { showToast } = useToast()
+  const [activeTab, setActiveTab] = useState<"random" | "favorites">("random")
+  const { joke, loading, getNewJoke } = useJoke()
+  const { favorites, addToFavorites, removeFromFavorites, updateRating } = useFavorites()
 
   useEffect(() => {
-    // Load favorites from localStorage on component mount
-    const storedFavorites = localStorage.getItem("chuckFavorites")
-    if (storedFavorites) {
-      setFavorites(JSON.parse(storedFavorites))
-    }
-
-    // Fetch initial joke
     getNewJoke()
-  }, [])
-
-  // Save favorites to localStorage whenever they change
-  useEffect(() => {
-    localStorage.setItem("chuckFavorites", JSON.stringify(favorites))
-  }, [favorites])
-
-  const getNewJoke = async () => {
-    setLoading(true)
-    try {
-      const newJoke = await fetchRandomJoke()
-      setJoke(newJoke)
-    } catch (error) {
-      console.error("Failed to fetch joke:", error)
-      showToast("Error: Failed to fetch a new joke. Please try again.", "error")
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const addToFavorites = () => {
-    if (!joke) return
-
-    // Check if joke is already in favorites
-    if (favorites.some((fav) => fav.id === joke.id)) {
-      showToast("This joke is already in your favorites!", "info")
-      return
-    }
-
-    // Add joke to favorites with initial rating of 0 (unrated)
-    const jokeWithRating = { ...joke, rating: 0 }
-    setFavorites((prev) => [...prev, jokeWithRating])
-
-    showToast("Joke added to your favorites!", "success")
-  }
-
-  const removeFromFavorites = (id: string) => {
-    setFavorites((prev) => prev.filter((joke) => joke.id !== id))
-    showToast("Joke removed from your favorites", "info")
-  }
-
-  const updateRating = (id: string, rating: number) => {
-    setFavorites((prev) => prev.map((joke) => (joke.id === id ? { ...joke, rating } : joke)))
-  }
+  }, [getNewJoke])
 
   return (
-    <div className="w-full">
-      {/* Custom Tabs */}
+    <div className="container mx-auto max-w-2xl p-4">
+      <h1 className="text-3xl font-bold mb-8 text-center">Chuck Norris Jokes</h1>
+
       <div className="flex w-full mb-6 border-b">
         <button
           onClick={() => setActiveTab("random")}
-          className={`flex-1 py-3 font-medium text-center transition-colors ${
+          className={`flex-1 py-2 text-center border-b-2 ${
             activeTab === "random"
-              ? "text-orange-600 border-b-2 border-orange-500"
-              : "text-gray-500 hover:text-orange-500"
+              ? "border-primary font-medium"
+              : "border-transparent hover:border-primary/30"
           }`}
         >
           Random Joke
         </button>
         <button
           onClick={() => setActiveTab("favorites")}
-          className={`flex-1 py-3 font-medium text-center transition-colors ${
+          className={`flex-1 py-2 text-center border-b-2 ${
             activeTab === "favorites"
-              ? "text-orange-600 border-b-2 border-orange-500"
-              : "text-gray-500 hover:text-orange-500"
+              ? "border-primary font-medium"
+              : "border-transparent hover:border-primary/30"
           }`}
         >
-          Favorites jokes ({favorites.length} jokes saved)
+          Favorites ({favorites.length})
         </button>
       </div>
 
-      {/* Tab Content */}
       {activeTab === "random" && (
         <div className="space-y-4">
           <div className="p-6 rounded-lg shadow-md bg-black">
             {loading ? (
-              <div className="flex justify-center items-center h-32">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
-              </div>
+              <div className="animate-pulse h-16 bg-gray-700 rounded-md" />
+            ) : joke ? (
+              <p className="text-lg text-white">{joke.value}</p>
             ) : (
-              <>
-                <p className="text-xl mb-6">{joke?.value}</p>
-                <div className="flex justify-between">
-                  <button
-                    onClick={getNewJoke}
-                    className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-md flex items-center transition-colors"
-                  >
-                    <NewJokeIcon filled={false} />
-                    New Joke
-                  </button>
-                  <button
-                    onClick={addToFavorites}
-                    className="px-4 py-2 border border-orange-500 text-orange-500 hover:bg-orange-50 rounded-md flex items-center transition-colors"
-                  >
-                    <HeartIcon filled={false} />
-                    Favorite
-                  </button>
-                </div>
-              </>
+              <p>Error loading joke. Please try again.</p>
             )}
+          </div>
+
+          <div className="flex gap-2 justify-center">
+            <button
+              onClick={getNewJoke}
+              className="text-white px-6 py-2 rounded-md flex items-center gap-2 bg-orange-400 hover:bg-orange-500 transition-colors"
+              disabled={loading}
+            >
+              <NewJokeIcon filled={false} /> New Joke
+            </button>
+            <button
+              onClick={() => joke && addToFavorites(joke)}
+              className="text-white px-6 py-2 rounded-md flex items-center gap-2 bg-gray-400 hover:bg-gray-500 transition-colors"
+              disabled={loading || !joke}
+            >
+              <HeartIcon filled={false} /> Add to Favorites
+            </button>
           </div>
         </div>
       )}
 
       {activeTab === "favorites" && (
-        <FavoritesList favorites={favorites} onRemove={removeFromFavorites} onUpdateRating={updateRating} />
+        <FavoritesList
+          favorites={favorites}
+          onRemove={removeFromFavorites}
+          onUpdateRating={updateRating}
+        />
       )}
     </div>
   )
 }
-

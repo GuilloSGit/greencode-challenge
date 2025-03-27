@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -25,7 +34,7 @@
     --ring: 24.6 95% 53.1%;
     --radius: 0.5rem;
   }
-
+ 
   .dark {
     --background: 20 14.3% 4.1%;
     --foreground: 60 9.1% 97.8%;
@@ -49,15 +58,17 @@
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+* {
+  border-style: solid;
+  border-color: hsl(var(--border));
 }
 
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+/* Animaciones personalizadas */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -72,4 +83,3 @@
 .animate-fade-in {
   animation: fadeIn 0.3s ease-in-out forwards;
 }
-
