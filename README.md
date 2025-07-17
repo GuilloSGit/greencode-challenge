@@ -23,7 +23,7 @@ This is a **Next.js** app that delivers unlimited Chuck Norris jokes because the
 ### 3️⃣ If you encounter styling issues, run these commands:
 ```sh
  # Install compatible versions of Tailwind CSS, PostCSS, and Autoprefixer
- npm install -D tailwindcss@3.3.0 postcss@8.4.31 autoprefixer@10.4.14
+ pnpm install -D tailwindcss@3.3.0 postcss@8.4.31 autoprefixer@10.4.14
  
  # Initialize Tailwind CSS
  npx tailwindcss init -p
@@ -31,13 +31,13 @@ This is a **Next.js** app that delivers unlimited Chuck Norris jokes because the
 
 ### 4️⃣ Run the development server
 ```sh
- npm run dev
+ pnpm run dev
 ```
 Then, open [http://localhost:3000](http://localhost:3000) in your browser and enjoy the legendary wisdom of Chuck Norris. 🥋
 
 ### 5️⃣ Run the tests
 ```sh
- npm test
+ pnpm test
 ```
 Chuck Norris doesn't test his code; the code tests itself out of fear. But since we're mere mortals, we have comprehensive tests. 💪
 
